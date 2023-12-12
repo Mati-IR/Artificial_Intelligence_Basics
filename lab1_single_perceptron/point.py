@@ -3,16 +3,16 @@ class Point:
     def __init__(self, x, y, label):
         self._x = x if x is not None else 0
         self._y = y if y is not None else 0
-        self._label = label if label is not None else lambda x: x
+        self._label = label if label is not None else 0
 
-    def get_coordinates(self):
+    def get_coordinates(self) -> list[int]:
         return [self._x, self._y]
 
     def set_coordinates(self, x, y):
         self._x = x
         self._y = y
 
-    def set_label(self, label):
+    def __set_label(self, label):
         self._label = label
 
     def get_label(self):
