@@ -10,6 +10,9 @@ verification_set = []
 
 def main():
     generator = PointGenerator(lambda x: x)
+    training_set = generator.generate(100)
+    verification_set = generator.generate(100)
+
     perceptron = Perceptron()
     perceptron.train(training_set)
     print(perceptron.verify(verification_set))

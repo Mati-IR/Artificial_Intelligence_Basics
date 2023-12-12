@@ -3,7 +3,7 @@ class Point:
     def __init__(self, x, y, label):
         self._x = x if x is not None else 0
         self._y = y if y is not None else 0
-        self.label = label if label is not None else lambda x: x
+        self._label = label if label is not None else lambda x: x
 
     def get_coordinates(self):
         return [self._x, self._y]
@@ -13,13 +13,13 @@ class Point:
         self._y = y
 
     def set_label(self, label):
-        self.label = label
+        self._label = label
 
     def get_label(self):
-        return self.label
+        return self._label
 
     def __str__(self) -> str:
-        return f"Point: {self._x}, {self._y}, {self.label}"
+        return f"Point: {self._x}, {self._y}, {self._label}"
 
     def __repr__(self) -> str:
-        return f"Point: {self._x}, {self._y}, {self.label}"
+        return f"Point: {self._x}, {self._y}, {self._label}"
