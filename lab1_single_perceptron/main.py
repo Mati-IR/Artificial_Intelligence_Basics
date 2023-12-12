@@ -1,11 +1,7 @@
 import random
 from point import Point
 from point_generator import PointGenerator
-from perceptron import *
-
-training_set =     []
-verification_set = []
-
+from perceptron import Perceptron
 
 
 def main():

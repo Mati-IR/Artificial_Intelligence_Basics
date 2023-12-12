@@ -21,7 +21,8 @@ class Perceptron:
     def __getLabel(self, point: list) -> int:
         return point[1]
 
-    def __predict(self, point: Point) -> float:
+#TODO: Bug here, should probably return 1 or -1 and not float
+    def __predict(self, point: list[int]) -> float:
         try:
             total = 0
             for i in range(len(point)):
@@ -41,12 +42,10 @@ class Perceptron:
                     weight += error
                 self._bias += error
 
-    def verify(self, points: list[dict[list, int]]) -> float:
+    def verify(self, points: list[Point]) -> float:
         correct = 0
         for point in points:
-            label = self.__getLabel(point)
-            sum = self.__predict(self.getCoordinates(point))
-            if label == sum:
+            if point.get_label() == self.__predict(point.get_coordinates()):
                 correct += 1
         return correct / len(points)
 
