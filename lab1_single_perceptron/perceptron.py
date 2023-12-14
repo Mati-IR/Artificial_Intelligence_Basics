@@ -1,6 +1,7 @@
 from point import Point
 import random
 
+
 class Perceptron:
     _weights = []
     _bias = 1
@@ -21,20 +22,22 @@ class Perceptron:
     def __getLabel(self, point: list) -> int:
         return point[1]
 
-#TODO: Bug here, should probably return 1 or -1 and not float
-    def __predict(self, point: list[int]) -> float:
+# TODO: Bug here, should probably return 1 or -1 and not float
+    def __predict(self, point: Point) -> float:
         try:
+            if type(point) is not Point:
+                raise TypeError(f"point is not of type Point: {point}")
+            coordinates = point.get_coordinates()
             total = 0
-            for i in range(len(point)):
-                total += point[i] * self._weights[i]
+            for i in range(len(coordinates)):
+                total += coordinates[i] * self._weights[i]
         except Exception as e:
-            print(f"point: {point}\nError: {e}")
+            print(f"Error: {e}")
 
         return total + self._bias
 
     def train(self, points: list[Point]) -> None:
         for point in points:
-            print(f"processed point: {point}")
             sum = self.__predict(point)
             error = point.get_label() - sum
             if error != 0:
@@ -45,7 +48,7 @@ class Perceptron:
     def verify(self, points: list[Point]) -> float:
         correct = 0
         for point in points:
-            if point.get_label() == self.__predict(point.get_coordinates()):
+            if point.get_label() == self.__predict(point):
                 correct += 1
         return correct / len(points)
 

@@ -5,7 +5,7 @@ from perceptron import Perceptron
 
 
 def main():
-    generator = PointGenerator(lambda x: x)
+    generator = PointGenerator(lambda x, y: 1 if y > x else -1)
     training_set = generator.generate(100)
     verification_set = generator.generate(100)
 
