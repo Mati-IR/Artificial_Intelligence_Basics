@@ -15,35 +15,38 @@ class Perceptron:
         self._activation_threshold = activation_threshold
 
     def __init__(self) -> None:
-        for i in range(random.randint(2, 5)):
+        for i in range(2):
             self._weights.append(random.randint(1, 10))
         bias = 1
 
     def __getLabel(self, point: list) -> int:
         return point[1]
 
-# TODO: Bug here, should probably return 1 or -1 and not float
-    def __predict(self, point: Point) -> float:
-        try:
-            if type(point) is not Point:
-                raise TypeError(f"point is not of type Point: {point}")
-            coordinates = point.get_coordinates()
-            total = 0
-            for i in range(len(coordinates)):
-                total += coordinates[i] * self._weights[i]
-        except Exception as e:
-            print(f"Error: {e}")
-
-        return total + self._bias
+    def __predict(self, point: Point) -> int:
+        prediction = 0
+        for i in range(len(self._weights)):
+            prediction += self._weights[i] * point.get_coordinates()[i]
+        prediction += self._bias
+        if prediction >= self._activation_threshold:
+            return 1
+        elif prediction <= self._failure_threshold:
+            return -1
+        else:
+            return 0
 
     def train(self, points: list[Point]) -> None:
         for point in points:
-            sum = self.__predict(point)
-            error = point.get_label() - sum
-            if error != 0:
-                for weight in self._weights:
-                    weight += error
-                self._bias += error
+            if self.__predict(point) >= self._activation_threshold:
+                if point.get_label() == -1:
+                    for i in range(len(self._weights)):
+                        self._weights[i] -= point.get_coordinates()[i]
+                    self._bias -= 1
+            else:
+                if point.get_label() == 1:
+                    for i in range(len(self._weights)):
+                        self._weights[i] += point.get_coordinates()[i]
+                    self._bias += 1
+            print(f"weights: {self._weights}, bias: {self._bias}")
 
     def verify(self, points: list[Point]) -> float:
         correct = 0
