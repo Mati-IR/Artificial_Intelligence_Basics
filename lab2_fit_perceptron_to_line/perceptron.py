@@ -5,6 +5,7 @@ import random
 class Perceptron:
     _weights = []
     _bias = 1
+    _learning_rate = 0.1
 
     _activation_threshold = 1
     _failure_threshold = 0
@@ -17,7 +18,6 @@ class Perceptron:
     def __init__(self) -> None:
         for i in range(2):
             self._weights.append(random.randint(1, 10))
-        bias = 1
 
     def __getLabel(self, point: list) -> int:
         return point[1]
@@ -34,7 +34,7 @@ class Perceptron:
         else:
             return 0
 
-    def train(self, points: list[Point]) -> None:
+    def train_classification(self, points: list[Point]) -> None:
         for point in points:
             if self.__predict(point) >= self._activation_threshold:
                 if point.get_label() == -1:
@@ -47,6 +47,7 @@ class Perceptron:
                         self._weights[i] += point.get_coordinates()[i]
                     self._bias += 1
             print(f"weights: {self._weights}, bias: {self._bias}")
+
 
     def verify(self, points: list[Point]) -> float:
         correct = 0
