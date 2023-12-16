@@ -18,14 +18,16 @@ def main():
 
     # Plot the points with tooltips
     fig, ax = plt.subplots()
-    for point in training_set:
+    for point in verification_set:
         marker = 'o' if point.get_label == 1 else 'x'
         color = 'red' if point.get_label() == 1 else 'blue'
         ax.scatter(point.get_coordinates()[0], point.get_coordinates()[1], marker=marker, color=color)
 
     cursor = mplcursors.cursor(hover=True)
-    # plot y=x
-    plt.plot([-100, 100], [-100, 100], color="green")
+
+    # plot the perceptron line
+    multipliers = perceptron.get_linear_function_multipliers()
+    plt.plot([-100, 100], [-100 * multipliers[0] + multipliers[1], 100 * multipliers[0] + multipliers[1]], color="black")
     plt.show()
 
 

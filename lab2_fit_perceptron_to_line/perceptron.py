@@ -48,7 +48,9 @@ class Perceptron:
                     self._bias += 1
             print(f"weights: {self._weights}, bias: {self._bias}")
 
-
+    def get_linear_function_multipliers(self) -> list[float]:
+        return [-self._weights[0] / self._weights[1], -self._bias / self._weights[1]]
+    
     def verify(self, points: list[Point]) -> float:
         correct = 0
         for point in points:
